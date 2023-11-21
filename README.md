@@ -2,9 +2,11 @@
 
 Demonstration of using the container workflow to build a bootable container image that include kiosk and a simple script running firefox.
 
-## notable issues
+## notable issues/ergonomics
 
 - Anaconda sets multi-user.target as default and whatever we set in the container build isn't honored (will have to file a bug, see https://github.com/rhinstaller/anaconda/blob/ee0b61fa135ba555f29bc6e3d035fbca8bcc14d5/pyanaconda/modules/services/installation.py#L174-L241)
+- useradd in the container seems to be a no-no, if there was a way to translate that to something using sysusers.d that'd be awesome (something in ostree container commit perhaps?)
+- there are RPMs that writes to /var - that's not ideal, either remove or copy them somewhere to later re-inject them using tmpfiles.d
 
 ## running
 
