@@ -1,4 +1,4 @@
-FROM quay.io/runcom/testsagano:test
+FROM quay.io/runcom/kiosk-base:latest
 ENV FLATPAK_SYSTEM_DIR /usr/lib/flatpak
 RUN rpm-ostree install flatpak && \
   flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo && \

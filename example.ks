@@ -8,7 +8,7 @@ part /boot/efi --size=100  --fstype=efi
 part /boot     --size=1000  --fstype=ext4 --label=boot
 part / --grow --fstype xfs
 
-ostreecontainer --url quay.io/runcom/testsagano:test	--no-signature-verification
+ostreecontainer --url quay.io/runcom/kiosk-base:latest	--no-signature-verification
 
 # we can inject the ssh key for the root account in the container but we can't
 # get rid of this line unfortunately

@@ -10,13 +10,21 @@ Demonstration of using the container workflow to build a bootable container imag
 - where do we set credentials? root ssh key in the container may be ok but crendentials in an image seems wrong (also, we can't get rid of `rootpw --iscrypted locked` in the kickstart file)
 - where does day 2 mgmt like `flatpak update` belong? since we have to dance a little bit to get the root's flatpak's dir under `/usr` I expect people to _rebuild_ the image right? meaning, nobody runs `flatpak update` on the system, right?
 
+## images
+
+If you don't want to build youserlf, the following base image is available to be used directly in kickstart:
+
+- `quay.io/runcom/kiosk-base:latest`
+
+You can then follow what's done in `Containerfile.update` and `Containerfile.flatpak` to get an idea about deriving from the base image from your own needs.
+
 ## running
 
 This has been tested on Fedora 39 and should work simply by following these instructions. Notice we have to disable secure boot since we're using CentOS stream.
 
 ```sh
-$ sudo podman build -t quay.io/runcom/testsagano:test .
-$ sudo podman push quay.io/runcom/testsagano:test
+$ sudo podman build -t quay.io/runcom/kiosk-base:latest .
+$ sudo podman push quay.io/runcom/kiosk-base:latest
 $ sudo cp /usr/share/edk2/ovmf/OVMF_VARS.fd /var/lib/libvirt/qemu/nvram/sagano-demo_VARS.fd
 $ curl -O https://dl.fedoraproject.org/pub/fedora/linux/releases/38/Everything/x86_64/os/images/boot.iso
 $ virt-install --connect qemu:///system --name sagano-demo --memory 2048 --vcpus 4 --disk size=40 \
@@ -33,13 +41,13 @@ If you hack a bit with osbuild, you could also just produce a bootable disk imag
 You can build and get the update with the following:
 
 ```sh
-$ sudo podman build -f Containerfile.update -t quay.io/runcom/testsagano:update .
-$ sudo podman push quay.io/runcom/testsagano:update
+$ sudo podman build -f Containerfile.update -t quay.io/runcom/kiosk-base:update .
+$ sudo podman push quay.io/runcom/kiosk-base:update
 $ ...
 # in the running vm
-$ sudo rpm-ostree rebase ostree-unverified-registry:quay.io/runcom/testsagano:update
+$ sudo rpm-ostree rebase ostree-unverified-registry:quay.io/runcom/kiosk-base:update
 $ sudo systemctl reboot
 ```
 
-With the above flow you could also create and rebase to an image that has flatpak and runs GIMP as a kiosk app.
+With the above flow you could also create and rebase to an image that has flatpak and runs GIMP as a kiosk app, see `Containerfile.flatpak`.
 
