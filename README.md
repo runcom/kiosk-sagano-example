@@ -17,6 +17,10 @@ If you don't want to build youserlf, the following base image is available to be
 - `quay.io/runcom/kiosk-base:latest`
 
 You can then follow what's done in `Containerfile.update` and `Containerfile.flatpak` to get an idea about deriving from the base image from your own needs.
+The other images are also available:
+
+- `quay.io/runcom/kiosk-base:update`
+- `quay.io/runcom/kiosk-base:flatpak`
 
 ## running
 
