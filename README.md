@@ -24,6 +24,14 @@ The other images are also available:
 
 ## running
 
+There are various ways to test this example:
+
+- install with Anaconda + kickstart
+- rebase an existing ostree system
+- use a tool to create a bootable disk image
+
+### install with Anaconda + kickstart
+
 This has been tested on Fedora 39 and should work simply by following these instructions. Notice we have to disable secure boot since we're using CentOS stream.
 
 ```sh
@@ -40,7 +48,16 @@ $ virt-install --connect qemu:///system --name sagano-demo --memory 2048 --vcpus
 
 ```
 
-If you hack a bit with osbuild, you could also just produce a bootable disk image. See also https://github.com/osbuild/osbuild-deploy-container/ - should be far easier I think.
+### rebase an existing ostree system
+
+```sh
+$ sudo rpm-ostree rebase ostree-unverified-registry:quay.io/runcom/kiosk-base:latest
+$ sudo systemctl reboot
+```
+
+### osbuild-deploy-container
+
+If you hack a bit with osbuild, you could also just produce a bootable disk image. See also https://github.com/osbuild/osbuild-deploy-container/ - should be far easier I think. Notice there's a selinux issue and it requires you to disable it until it's fixed https://github.com/osbuild/osbuild-deploy-container/issues/6.
 
 ## updating
 
