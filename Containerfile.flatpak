@@ -1,7 +1,7 @@
 FROM quay.io/runcom/kiosk-base:latest
-ENV FLATPAK_SYSTEM_DIR /usr/lib/flatpak
+COPY image.conf /etc/flatpak/installations.d/
 RUN rpm-ostree install flatpak && \
-  flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo && \
-  flatpak --system install -y flathub org.gimp.GIMP
+  flatpak remote-add --installation=image --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo && \
+  flatpak install --installation=image -y flathub org.gimp.GIMP
 COPY --chmod=0755 --chown=1042:1042 gnome-kiosk-script.flatpak /usr/lib/gnome-kiosk-script
 RUN ostree container commit
