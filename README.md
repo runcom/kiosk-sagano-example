@@ -2,7 +2,7 @@
 
 Demonstration of using the container workflow to build a bootable container image that include kiosk and a simple script running firefox.
 
-## notable issues/ergonomics
+## Notable issues/ergonomics
 
 - Anaconda sets multi-user.target as default and whatever we set in the container build isn't honored (will have to file a bug, see https://github.com/rhinstaller/anaconda/blob/ee0b61fa135ba555f29bc6e3d035fbca8bcc14d5/pyanaconda/modules/services/installation.py#L174-L241)
 - useradd in the container seems to be a no-no, if there was a way to translate that to something using sysusers.d that'd be awesome (something in ostree container commit perhaps?)
@@ -10,7 +10,7 @@ Demonstration of using the container workflow to build a bootable container imag
 - where do we set credentials? root ssh key in the container may be ok but crendentials in an image seems wrong (also, we can't get rid of `rootpw --iscrypted locked` in the kickstart file)
 - where does day 2 mgmt like `flatpak update` belong? since we have to dance a little bit to get the root's flatpak's dir under `/usr` I expect people to _rebuild_ the image right? meaning, nobody runs `flatpak update` on the system, right?
 
-## images
+## Images
 
 If you don't want to build youserlf, the following base image is available to be used directly in kickstart:
 
@@ -22,7 +22,7 @@ The other images are also available:
 - `quay.io/runcom/kiosk-base:update`
 - `quay.io/runcom/kiosk-base:flatpak`
 
-## running
+## Running
 
 There are various ways to test this example:
 
@@ -59,7 +59,7 @@ $ sudo systemctl reboot
 
 If you hack a bit with osbuild, you could also just produce a bootable disk image. See also https://github.com/osbuild/osbuild-deploy-container/ - should be far easier I think. Notice there's a selinux issue and it requires you to disable it until it's fixed https://github.com/osbuild/osbuild-deploy-container/issues/6.
 
-## updating
+## Updating
 
 You can build and get the update with the following:
 
@@ -74,4 +74,3 @@ $ sudo systemctl reboot
 ```
 
 With the above flow you could also create and rebase to an image that has flatpak and runs GIMP as a kiosk app, see `Containerfile.flatpak`.
-
