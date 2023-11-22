@@ -27,8 +27,10 @@ The other images are also available:
 This has been tested on Fedora 39 and should work simply by following these instructions. Notice we have to disable secure boot since we're using CentOS stream.
 
 ```sh
+# optional
 $ sudo podman build -t quay.io/runcom/kiosk-base:latest .
 $ sudo podman push quay.io/runcom/kiosk-base:latest
+$ ...
 $ sudo cp /usr/share/edk2/ovmf/OVMF_VARS.fd /var/lib/libvirt/qemu/nvram/sagano-demo_VARS.fd
 $ curl -O https://dl.fedoraproject.org/pub/fedora/linux/releases/38/Everything/x86_64/os/images/boot.iso
 $ virt-install --connect qemu:///system --name sagano-demo --memory 2048 --vcpus 4 --disk size=40 \
@@ -45,6 +47,7 @@ If you hack a bit with osbuild, you could also just produce a bootable disk imag
 You can build and get the update with the following:
 
 ```sh
+# optional
 $ sudo podman build -f Containerfile.update -t quay.io/runcom/kiosk-base:update .
 $ sudo podman push quay.io/runcom/kiosk-base:update
 $ ...
