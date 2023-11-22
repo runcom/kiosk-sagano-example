@@ -40,3 +40,5 @@ $ sudo rpm-ostree rebase ostree-unverified-registry:quay.io/runcom/testsagano:up
 $ sudo systemctl reboot
 ```
 
+With the above flow you could also create and rebase to an image that has flatpak and runs GIMP as a kiosk app.
+
