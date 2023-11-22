@@ -10,13 +10,9 @@ part / --grow --fstype xfs
 
 ostreecontainer --url quay.io/runcom/testsagano:test	--no-signature-verification
 
-firewall --disabled
-services --enabled=sshd
-
-# Only inject a SSH key for root
+# we can inject the ssh key for the root account in the container but we can't
+# get rid of this line unfortunately
 rootpw --iscrypted locked
-# Add your example SSH key here!
-sshkey --username root "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL7xFq1HtZKZiaD8MfkhNtn37m8GSc1W168NoSaT9RSf cardno:000F_C36A3FC0"
 reboot
 
 # Workarounds until https://github.com/rhinstaller/anaconda/pull/5298/ lands
