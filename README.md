@@ -4,10 +4,10 @@ Demonstration of using the container workflow to build a bootable container imag
 
 ## Notable issues/ergonomics
 
-- Anaconda sets multi-user.target as default and whatever we set in the container build isn't honored (will have to file a bug, see https://github.com/rhinstaller/anaconda/blob/ee0b61fa135ba555f29bc6e3d035fbca8bcc14d5/pyanaconda/modules/services/installation.py#L174-L241)
-- useradd in the container seems to be a no-no, if there was a way to translate that to something using sysusers.d that'd be awesome (something in ostree container commit perhaps?)
-- there are RPMs that writes to /var - that's not ideal, either remove or copy them somewhere to later re-inject them using tmpfiles.d
-- where do we set credentials? root ssh key in the container may be ok but crendentials in an image seems wrong (also, we can't get rid of `rootpw --iscrypted locked` in the kickstart file)
+- Anaconda sets `multi-user.target` as default and whatever we set in the container build isn't honored (will have to file a bug, see https://github.com/rhinstaller/anaconda/blob/ee0b61fa135ba555f29bc6e3d035fbca8bcc14d5/pyanaconda/modules/services/installation.py#L174-L241)
+- `useradd` in the container seems to be a no-no, if there was a way to translate that to something using `sysusers.d` that'd be awesome (something in `ostree container commit` perhaps?)
+- there are RPMs that writes to `/var` - that's not ideal, either remove or copy them somewhere to later re-inject them using `tmpfiles.d`
+- where do we set credentials? root ssh keys in the container may be ok but crendentials in an image seems wrong (also, we can't get rid of `rootpw --iscrypted locked` in the kickstart file)
 - where does day 2 mgmt like `flatpak update` belong? since we have to dance a little bit to get the root's flatpak's dir under `/usr` I expect people to _rebuild_ the image right? meaning, nobody runs `flatpak update` on the system, right?
 
 ## Images
@@ -29,6 +29,10 @@ There are various ways to test this example:
 - install with Anaconda + kickstart
 - rebase an existing ostree system
 - use a tool to create a bootable disk image
+
+### changing the root ssh key
+
+The ssh key for the root user lives in the main `Containerfile` - change it there as needed. Another option would be to set it in the kickstart file.
 
 ### install with Anaconda + kickstart
 
