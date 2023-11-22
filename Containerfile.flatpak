@@ -1,0 +1,7 @@
+FROM quay.io/runcom/testsagano:test
+ENV FLATPAK_SYSTEM_DIR /usr/lib/flatpak
+RUN rpm-ostree install flatpak && \
+  flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo && \
+  flatpak --system install -y flathub org.gimp.GIMP
+COPY --chmod=0755 --chown=1042:1042 gnome-kiosk-script.flatpak /usr/lib/gnome-kiosk-script
+RUN ostree container commit
