@@ -1,6 +1,6 @@
 # kiosk-sagano-example
 
-Demonstration of using the container workflow to build a bootable container image that include kiosk and a simple script running firefox.
+Demonstration of using the container workflow to build a bootable container image that includes kiosk and a simple script running firefox.
 
 ## Notable issues/ergonomics
 
