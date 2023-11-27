@@ -36,7 +36,7 @@ The ssh key for the root user lives in the main `Containerfile` - change it ther
 
 ### install with Anaconda + kickstart
 
-This has been tested on Fedora 39 and should work simply by following these instructions. Notice we have to disable secure boot since we're using CentOS stream.
+This has been tested on Fedora 39 and should work simply by following these instructions. _Notice we have to disable secure boot since we're using CentOS stream._
 
 ```sh
 # optional
@@ -44,12 +44,7 @@ $ sudo podman build -t quay.io/runcom/kiosk-base:latest .
 $ sudo podman push quay.io/runcom/kiosk-base:latest
 $ ...
 $ sudo cp /usr/share/edk2/ovmf/OVMF_VARS.fd /var/lib/libvirt/qemu/nvram/sagano-demo_VARS.fd
-$ curl -O https://dl.fedoraproject.org/pub/fedora/linux/releases/38/Everything/x86_64/os/images/boot.iso
-$ virt-install --connect qemu:///system --name sagano-demo --memory 2048 --vcpus 4 --disk size=40 \
-          --boot loader=/usr/share/edk2/ovmf/OVMF_CODE.secboot.fd,loader.readonly=yes,loader.secure='no',loader.type=pflash,nvram=/var/lib/libvirt/qemu/nvram/sagano-demo_VARS.fd --network=network=default,model=virtio \
-          --os-variant rhel9.0 --location boot.iso \
-          --noautoconsole --initrd-inject $(pwd)/example.ks --extra-args="inst.ks=file:/example.ks console=tty0 console=ttyS0,115200 inst.profile=rhel"
-
+$ ./run.sh
 ```
 
 ### rebase an existing ostree system
