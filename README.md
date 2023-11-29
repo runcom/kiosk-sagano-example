@@ -9,6 +9,13 @@ Demonstration of using the container workflow to build a bootable container imag
 - there are RPMs that writes to `/var` - that's not ideal, either remove or copy them somewhere to later re-inject them using `tmpfiles.d`
 - where do we set credentials? root ssh keys in the container may be ok but crendentials in an image seems wrong (also, we can't get rid of `rootpw --iscrypted locked` in the kickstart file)
 - where does day 2 mgmt like `flatpak update` belong? since we have to dance a little bit to get the root's flatpak's dir under `/usr` I expect people to _rebuild_ the image right? meaning, nobody runs `flatpak update` on the system, right?
+- update size isn't small
+
+## What went well
+
+- There's no thinking around managing updates; just push the image on quay.io or any registry and choose a tag to either rebase to or follow and that's it
+- iterating on changes is super fast, just rebuld, push, rebase
+- checking what's inside the ostree commit is just a `podman run` away
 
 ## Images
 
