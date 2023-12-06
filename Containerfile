@@ -1,4 +1,4 @@
-FROM quay.io/centos-boot/centos-tier-1-dev:stream9
+FROM quay.io/centos-bootc/centos-bootc-dev:stream9
 RUN rpm-ostree install gdm firefox gnome-kiosk-script-session plymouth-system-theme firewalld
 RUN rm -rf /var/lib/gdm/.config/pulse/default.pa && rm -rf /var/lib/xkb/README.compiled
 COPY custom.conf /etc/gdm/
